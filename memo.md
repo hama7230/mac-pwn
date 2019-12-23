@@ -8,6 +8,7 @@
 
 
 * otool -L ./bin (= ldd)
+* otool -hv ./bin (= ヘッダのフラグを表示。PIE有効化かどうか調べられる)
 
 * https://lldb.llvm.org/use/map.html
 
@@ -38,4 +39,15 @@
 * magaine 
     * tcacheのようなもの
     * <= 0x100のチャンクはfreeされずに、maginzeに突っ込まれる。次にfreeが呼ばれたときに、処理される。
-    
+
+
+
+## one gadget 
+
+```
+MD5 (./libsystem_c.dylib) = 15450e1eb70f38240d28cb9736605019
+__text:0000000000023FE9                 lea     rdi, aBinSh     ; "/bin/sh"
+__text:0000000000023FF0                 mov     rsi, r14        ; char **
+__text:0000000000023FF3                 mov     rdx, [rbp+var_450] ; char **
+__text:0000000000023FFA                 call    _execve
+```
